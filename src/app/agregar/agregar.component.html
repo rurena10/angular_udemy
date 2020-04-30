@@ -3,30 +3,49 @@
         <div class="form-group">
             <label>Nombre:</label>
             <input type="text" class="form-control" formControlName="nombre">
-            <div class="alert alert-danger" role="alert">
-                El nombre es requerido
+            <div *ngIf="formularioCreado.controls['nombre'].invalid && formularioCreado.controls['nombre'].dirty" class="alert alert-danger" role="alert">
+              <span *ngIf="formularioCreado.controls['nombre'].errors.required">El nombre es requerido</span>  
+              El nombre es requerido
               </div>
         </div>
+        <!-- {{ formularioCreado.controls['nombre'].invalid}}
+        {{ formularioCreado.controls['nombre'].dirty}} -->
         <div class="form-group">
             <label>Email:</label>
             <input type="text" class="form-control" formControlName="correo">
-            <div class="alert alert-danger" role="alert">
+            <div *ngIf="formularioCreado.controls['correo'].invalid && formularioCreado.controls['correo'].dirty"> 
+              <div *ngIf="formularioCreado.controls['correo'].errors.required" class="alert alert-danger" role="alert">
                 El email es requerido
               </div>
-              <div class="alert alert-danger" role="alert">
+              <div *ngIf="formularioCreado.controls['correo'].errors.email" class="alert alert-danger" role="alert">
                 No parece un correo valido
               </div>
+            </div>
+            
         </div>
         <div class="form-group">
             <label>Contraseña:</label>
             <input type="password" class="form-control" formControlName="password">
-            <div class="alert alert-danger" role="alert">
+            <div *ngIf="formularioCreado.controls['password'].invalid && formularioCreado.controls['password'].dirty">
+              <div *ngIf="formularioCreado.controls['password'].errors.required" class="alert alert-danger" role="alert">
                 El password es requerido
               </div>
-              <div class="alert alert-danger" role="alert">
+              <div *ngIf="formularioCreado.controls['password'].errors.minlength" class="alert alert-danger" role="alert">
                 El password debe tener por lo menos 8 caracteres
               </div>
+            </div>
+            
         </div>
-        <button class="btn btn-primary">Agregar</button>
+        <button [disabled]="!formularioCreado.valid" class="btn btn-primary" (click)="agregar()">Agregar</button>
     </form>
+</div>
+
+<!-- <p>{{formularioCreado.valid}}</p>
+
+<p>{{ formularioCreado.value | json}}</p> -->
+
+<div *ngFor="let usuario of usuarios">
+  <h4>{{ usuario.nombre }}</h4>
+  <p>{{ usuario.correo }}</p>
+  <p>{{ usuario.password }}</p>
 </div>

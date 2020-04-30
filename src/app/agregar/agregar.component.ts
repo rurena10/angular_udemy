@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+interface Usuario{
+  nombre: string
+  correo: string
+  password: string
+}
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
@@ -8,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AgregarComponent implements OnInit {
   formularioCreado:FormGroup
+  usuarios : Array<Usuario> = new Array<Usuario>()
   constructor(private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
@@ -24,6 +30,12 @@ export class AgregarComponent implements OnInit {
         Validators.required, Validators.minLength(8)
       ])]
     })
+  }
+
+  agregar(){
+    this.usuarios.push(this.formularioCreado.value as Usuario)
+    this.formularioCreado.reset
+    //console.log(this.formularioCreado.value)
   }
 
 }
